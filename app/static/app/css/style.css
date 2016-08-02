@@ -152,6 +152,29 @@ header .logo:hover {
     margin: 0 0 20px;
 }
 
+.friends-list .item {
+    border-bottom: 1px solid #e3e3e3;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px 0;
+    overflow: hidden;
+}
+.friends-list .item:hover {
+    background: #f6f6f6;
+    cursor: pointer;
+}
+.friends-list .item img {
+    float: left;
+    margin: 0 20px 0 10px;
+}
+.friends-list .item .name {
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    font-weight: 500;
+}
+
 /* Social auth */
 .social-block {
     margin: 20px 0 0;
@@ -190,4 +213,57 @@ header .logo:hover {
 }
 .btn-social.btn-social-ok {
     background: #ee8208;
+}
+
+.checkbox {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 17px;
+    height: 17px
+}
+.checkbox + label {
+    cursor: pointer
+}
+.checkbox:not(checked) {
+    position: absolute;
+    opacity: 0
+}
+.checkbox:not(checked) + label {
+    position: relative;
+    float: left;
+    height: 50px;
+    display: block;
+    line-height: 50px;
+    padding: 0px 0 0 65px;
+}
+.checkbox:not(checked) + label:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 50px;
+    margin-top: -13px;
+    height: 26px;
+    border-radius: 13px;
+    background: #CDD1DA;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2)
+}
+.checkbox:not(checked) + label:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -11px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+    transition: all .2s
+}
+.checkbox:checked + label:before {
+    background: #32a56d;
+}
+.checkbox:checked + label:after {
+    left: 26px
 }

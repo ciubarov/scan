@@ -26,3 +26,14 @@ class VKApi(object):
         ).json()
 
         return response.get('response')
+
+    def wall_post(self, message):
+        response = requests.get(
+            'https://api.vk.com/method/wall.post',
+            params={
+                'access_token': self.token,
+                'message': message
+            }
+        ).json()
+
+        return response.get('response')

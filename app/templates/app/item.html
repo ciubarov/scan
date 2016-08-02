@@ -7,13 +7,24 @@
 {% block content %}
 <div class="item">
   {% if user and not user.is_anonymous %}
-    <span class="hello-user">Привет, {{ user.get_full_name|default:user.username }}!</span>
+    <span class="hello-user">Привет, {{ user.get_full_name|default:user.username }}!<a href="/logout/">Выйти</a></span>
     <div class="friends-list">
+      <!-- <a href="#" id="post-it" data-token="{{token}}">Пост</a> -->
+      <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}')">
       {% for usr in user_friends %}
-        <div class="item">
-          <img src="{{usr.photo_50}}" alt="">
-        </div>
+        <label for="id{{usr.user_id}}">
+          <div class="item">
+            <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
+            <label for="id{{usr.user_id}}"></label>
+            <img src="{{usr.photo_50}}" alt="">
+            <div class="name">
+              {{usr.first_name}} {{usr.last_name}}
+            </div>
+          </div>
+        </label>
       {% endfor %}
+      <button>Отправить на стену</button>
+    </form>
     </div>
   {% else %}
     <h1>{{ article.title }}</h1>
