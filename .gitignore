@@ -2,8 +2,6 @@
 *.log
 *.pot
 *.pyc
-__pycache__/
-uploads/
 local_settings.py
 db.sqlite3
 media
