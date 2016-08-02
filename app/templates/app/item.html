@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block content %}
+<div class="item">
+  {% if user and not user.is_anonymous %}
+    <span class="hello-user">Привет, {{ user.get_full_name|default:user.username }}!</span>
+    <div class="friends-list">
+      {% for usr in user_friends %}
+        <div class="item">
+          <img src="{{usr.photo_50}}" alt="">
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.text }}</p>
+    <div class="social-block">
+        <div class="title">Войдите, используя аккаунт социальных сетей:</div>
+        <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}" title="Facebook">
+            <i class="icon-facebook"></i>
+            Facebook
+        </a>
+        <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}" title="ВКонтакте">
+            <i class="icon-vkontakte"></i>
+            ВКонтакте
+        </a>
+        <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}" title="Odnoklassniki">
+            <i class="icon-odnoklassniki"></i>
+            Odnoklassniki
+        </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
