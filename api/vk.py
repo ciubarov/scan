@@ -10,7 +10,7 @@ class VKApi(object):
             'https://api.vk.com/method/users.get',
             params={
                 'access_token': self.token,
-                'fields': 'photo_50,sex,bdate,country,city, domain, can_post'
+                'fields': 'photo_100,sex,bdate,country,city, domain, can_post'
         }).json()
         
         return response.get('profile')
@@ -21,7 +21,7 @@ class VKApi(object):
             params={
                 'user_id': self.uid,
                 'access_token': self.token,
-                'fields': 'photo_50,first_name,last_name,can_post'
+                'fields': 'photo_100,first_name,last_name,can_post'
             }
         ).json()
 

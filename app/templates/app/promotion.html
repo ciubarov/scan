@@ -1,0 +1,89 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+{{ promotion.title }}
+{% endblock %}
+
+{% block content %}
+<div class="wrapper-promo">
+  
+      {% if user and not user.is_anonymous %}
+            <span class="hello-user">Поделиться скидкой с друзьями?</span>
+                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}')">
+                        <div class="friends-list">
+                                    {% for usr in user_friends %}
+                                          <label for="id{{usr.user_id}}">
+                                                <div class="item">
+                                                      <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
+                                                      <img src="{{usr.photo_100}}" alt="">
+                                                      <div class="name">
+                                                            {{usr.first_name}} {{usr.last_name}}
+                                                      </div>
+                                                </div>
+                                          </label>
+                                    {% endfor %}
+                        </div>
+                        <div class="buttons">
+                              <span class="check-all btn">Выбрать всех</span>
+                              <button class="btn nactive">Поделиться!</button>
+                        </div>
+                  </form>
+      {% else %}
+            <div class="company-info">
+                  <div class="logo">
+                        <img src="/{{company.logo}}" alt="">
+                  </div>
+                  <div class="info">
+                        <div class="dummy-child"></div>
+                        <div class="valign">
+                              {% if company.phone %}<span>{{company.phone}}</span>{% endif %}
+                              {% if company.address %}<span>{{company.address}}</span>{% endif %}
+                              {% if company.website %}<span><a href="http://{{company.website}}" rel="nofollow" target="_blank">{{company.website}}</a></span>{% endif %}
+                        </div>
+                  </div>
+<!--                   <div style="position: absolute; left: 50px; top: 50px;">
+      <div class="parent">
+        <div class="dummy-child"></div>
+            <div class="valign" style="background-color: lightblue;">test</div>
+      </div>
+</div> -->
+            </div>
+            <div class="inner">    
+                  <h1>{{ promotion.title }}</h1>
+                  <p>{{ promotion.description }}</p>
+                  <div class="promo_code">
+                        Ваш промо-код: <span>{{ promo_code }}</span>
+                  </div>
+            </div>
+            <div class="social-block">
+                  <div class="title">
+                      {% if promotion.help_text %}
+                        {{ promotion.help_text }}
+                      {% else %}
+                        Войдите, используя аккаунт социальных сетей:
+                      {% endif %}
+                  </div>
+                  <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" title="Facebook">
+                        <i class="icon-facebook"></i>
+                        Facebook
+                  </a>
+                  <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next={{request.path}}" title="ВКонтакте">
+                        <i class="icon-vkontakte"></i>
+                        ВКонтакте
+                  </a>
+                  <a class="btn-social btn-social-tw" href="#" title="Twitter">
+                        <i class="icon-twitter"></i>
+                        Twitter
+                  </a>
+                  <a class="btn-social btn-social-ig" href="#" title="Instagram">
+                        <i class="icon-instagram"></i>
+                        Instagram
+                  </a>
+                  <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}?next={{request.path}}" title="Odnoklassniki">
+                        <i class="icon-odnoklassniki"></i>
+                        Одноклассники
+                  </a>
+            </div>
+      {% endif %}
+</div>
+{% endblock %}
