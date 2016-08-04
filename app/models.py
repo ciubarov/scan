@@ -28,10 +28,9 @@ class Company(models.Model):
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=200)
     website = models.CharField(max_length=100)
-    
-    def __str__(self):
-        return self.name
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Company._meta.fields]
 
 class Promotion(models.Model):
     background = models.ImageField(upload_to = 'static/uploads/', default = '/uploads/None/no-img.jpg')
@@ -42,9 +41,9 @@ class Promotion(models.Model):
     post_text = models.TextField()
     allowed_providers = models.CharField(max_length=200, default = 'vk,fb,ok,ig,tw', verbose_name = 'Allowed providers (Comma separate (vk,fb,ok,ig,tw))')
     company = models.ForeignKey(Company)
-
-    def __str__(self):
-        return self.title
+    
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Promotion._meta.fields]
 
 class Guest(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
