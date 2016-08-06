@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 app/__pycache__
+app/migrations
 scanme/__pycache__
 api/__pycache__
 #uploads/
