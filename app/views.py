@@ -74,11 +74,12 @@ def show_promotion(request):
     user_friends = []
     vk_token = 0
     if request.user and request.user.is_authenticated():
-        vk_social = request.user.social_auth.get(provider='vk-oauth2')
-        vk_token = vk_social.extra_data['access_token']
-        vk_api = VKApi(vk_social.uid,vk_token)
-        user_friends = vk_api.get_friends_list()
-        user_photo = vk_api.get_profile_data()[0]['photo_200']
+        vk_social = request.user.social_auth.filter(provider='vk-oauth2').first()
+        if vk_social:
+            vk_token = vk_social.extra_data['access_token']
+            vk_api = VKApi(vk_social.uid,vk_token)
+            user_friends = vk_api.get_friends_list()
+            user_photo = vk_api.get_profile_data()[0]['photo_200']
 
     args = {
         'promotion': promotion_info, 
