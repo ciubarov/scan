@@ -80,6 +80,8 @@ def show_promotion(request):
             vk_api = VKApi(vk_social.uid,vk_token)
             user_friends = vk_api.get_friends_list()
             user_photo = vk_api.get_profile_data()[0]['photo_200']
+        else:
+            logout(request)
 
     args = {
         'promotion': promotion_info, 
