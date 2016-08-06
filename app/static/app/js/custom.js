@@ -49,7 +49,8 @@ VK.init({
 // Пришлось делать не асинхронный запрос
 function get_promocode() {
 	$.ajax({
- 		url: "/get-promocode/",
+ 		url: "/promocode/",
+ 		type: 'GET',
 		cache: false,
 		async: false,
         success: function(data) {
@@ -76,7 +77,7 @@ function wall_post(token,post_text,guest,token) {
 		} else {
 	 	  	VK.Api.call('wall.post', {access_token: token, message: message}, function(r) {
 				if(r.response) {
-					$.post('/get-promocode/', { promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
+					$.post('/promocode/', { promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
 				} else {
 				}
 			});

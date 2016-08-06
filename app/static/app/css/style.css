@@ -421,3 +421,58 @@ footer {
     padding: 20px 0 0;
     text-align: center;
 }
+@media only screen and (min-width:0px) and (max-width:700px), only screen and (min-device-width:0px) and (max-device-width:700px) {
+    .wrapper {
+        margin: 0 0 20px;
+        width: 100%;
+    }
+    .wrapper .wrapper-promo .company-info .logo {
+        width: 100%;
+        max-width: 100%;
+    }
+    .wrapper .wrapper-promo .company-info .info {
+        position: relative;
+        float: none;
+        width: 100%;
+        right: 0;
+        text-align: center;
+        margin: 20px 0 0;
+    }
+    .btn-social {
+        width: 150px;
+    }
+    .user-data-form input {
+        width: 100%;
+    }
+    .user-data-form button {
+        width: 220px;
+    }
+    .friends-list {
+        height: auto;
+        padding: 10px 0 40px;
+    }
+    .friends-list .item {
+        width: 48%;
+    }
+    #friends-list .buttons {
+        position: fixed;
+        bottom: 0;
+        background: rgb(246, 246, 246);
+        width: 100%;
+        padding: 15px 10px;
+    }
+    #friends-list .buttons > * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    #friends-list .buttons .check-all {
+        width: 40%;
+        padding: 0;
+        float: left;
+    }
+    #friends-list .buttons button {
+        width: 58%;
+        padding: 0;
+    }
+}

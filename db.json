@@ -153,10 +153,10 @@
 },
 {
   "model": "sessions.session",
-  "pk": "3g23r9k4mvyyoza97n738x29667wirdi",
+  "pk": "45hzu4of6il76mv0vc39s4m18uf67f04",
   "fields": {
-    "session_data": "OTg1OWFkY2M4ZDExOWQ2MDI0ZDU2ZGY0YzU5MjlkNjljNDJmYWI1ODp7Il9hdXRoX3VzZXJfaGFzaCI6IjdmNWJlMTFlMmNmNzhlNWZhMjcxODc2ZTZkYmE5Yjg1MDdlZTcxMjYiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJ2ay1vYXV0aDIiLCJfYXV0aF91c2VyX2lkIjoiNCIsIm5leHQiOiIvIiwidmstb2F1dGgyX3N0YXRlIjoiNUNOdEZ5dmlscndWUFg0S09TSEdBVVBDN1JRTTBWcDEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMudmsuVktPQXV0aDIifQ==",
-    "expire_date": "2016-08-20T06:53:48.907Z"
+    "session_data": "YjFiZWMxYmQxM2NlMDk4MTI2MjU1NDllZmI1YjVkOTAxM2ExMzIyODp7InNvY2lhbF9hdXRoX2xhc3RfbG9naW5fYmFja2VuZCI6InZrLW9hdXRoMiIsIl9hdXRoX3VzZXJfaGFzaCI6IjdmNWJlMTFlMmNmNzhlNWZhMjcxODc2ZTZkYmE5Yjg1MDdlZTcxMjYiLCJfYXV0aF91c2VyX2lkIjoiNCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6InNvY2lhbC5iYWNrZW5kcy52ay5WS09BdXRoMiIsIm5leHQiOiIvIiwidmstb2F1dGgyX3N0YXRlIjoid0tNUG1iSXo2R1ZSem9GMHVmdzl6bzRhTDBXb1ZhVXAifQ==",
+    "expire_date": "2016-08-20T21:34:26.242Z"
   }
 },
 {
@@ -209,14 +209,6 @@
 },
 {
   "model": "sessions.session",
-  "pk": "e1vtkxib3a2dljwyjcrm82iukvryofk4",
-  "fields": {
-    "session_data": "MjNmZTM1MjE3MjI1YmVmNjgwMmVmNDExZTBiOGNiZWJhMTExNjNmMTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiZDcxZjUzNDAxYzJkZjNiYjQ5OGQyZDkxOTU5Y2ZmNGY5ZDc0NzIwNSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
-    "expire_date": "2016-08-12T21:32:58.597Z"
-  }
-},
-{
-  "model": "sessions.session",
   "pk": "e5alr7kx612m0nko06sog09gaj50twbe",
   "fields": {
     "session_data": "NjYyMDA1ODUwODNjZjQ3ZTZlNjFhM2ExOTI3MjliMTFhZjVlMjcxZjp7InZrLW9hdXRoMl9zdGF0ZSI6IndWc1B2ckxHZkVDZFd2eGxqMzlEdTVGajZWc09xZEtBIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoic29jaWFsLmJhY2tlbmRzLnZrLlZLT0F1dGgyIiwiX2F1dGhfdXNlcl9oYXNoIjoiMTQwY2MxODAxNjlkYzhhNjVhNWU5OWE5NGNhNjJkYmE3ZDBiZmRlNyIsInNvY2lhbF9hdXRoX2xhc3RfbG9naW5fYmFja2VuZCI6InZrLW9hdXRoMiIsIl9hdXRoX3VzZXJfaWQiOiIzIn0=",
@@ -261,6 +253,14 @@
   "fields": {
     "session_data": "MzBmZTIyZDU4ZTAyNGRjMWUyNTU4YTU3M2E4MjU0NzMxYTQ2MTI5NTp7Imluc3RhZ3JhbV9zdGF0ZSI6Imp3WVlFeUpIODVucDlSR2NtZm1vam5DTjE2UXBpZWJRIn0=",
     "expire_date": "2016-08-15T09:47:29.095Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qjlrhrremmn8fi7zvowp5uhxdyzmkibq",
+  "fields": {
+    "session_data": "OTQ3YWQ3MjYwY2JlYWY1YmQ4NjU5MjBiM2UyNWIyZjBlZTI5NGE1ODp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiJkNzFmNTM0MDFjMmRmM2JiNDk4ZDJkOTE5NTljZmY0ZjlkNzQ3MjA1In0=",
+    "expire_date": "2016-08-20T11:46:04.195Z"
   }
 },
 {
@@ -310,14 +310,6 @@
     "post_text": "\u042f \u043f\u043e\u043b\u0443\u0447\u0438\u043b \u0441\u043a\u0438\u0434\u043a\u0443 10% \u043d\u0430 \u043a\u043e\u043a\u0442\u0435\u0439\u043b\u044c. \u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u044e!",
     "allowed_providers": "vk,fb,ok,ig,tw",
     "company": 1
-  }
-},
-{
-  "model": "app.promocode",
-  "pk": 8,
-  "fields": {
-    "promocode": "Z181VK",
-    "guest": 10
   }
 },
 {
@@ -757,7 +749,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$24000$HTSBKxraVLXg$zFu16CKdMzyiPuTHHqQaVnlb46ol7NNg3loI/wtrHkY=",
-    "last_login": "2016-07-29T21:32:58.578Z",
+    "last_login": "2016-08-06T21:33:59.234Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -811,7 +803,7 @@
   "pk": 4,
   "fields": {
     "password": "!XUktA974JbC4LAtcg8uhwKsyeam2VQ0A7NDusbeR",
-    "last_login": "2016-08-06T06:53:48.889Z",
+    "last_login": "2016-08-06T21:34:26.224Z",
     "is_superuser": false,
     "username": "ciubarov83b9ca0181c84809",
     "first_name": "\u0415\u0432\u0433\u0435\u043d\u0438\u0439",
@@ -831,7 +823,7 @@
     "user": 2,
     "provider": "facebook",
     "uid": "522751254580032",
-    "extra_data": "{\"access_token\": \"EAAInlZA1OMPEBADnVMwpOjGcPzvHrfp01dhIxsZAcnfEmYeavqXWUZBRlaFeWYCjmkXEJPigNgdcN38vrlBlonC8xawYW9zr72NnbBtPIRwKgjruQPahjLib7HS551cThBf2NN0R78b4bbUIaPlkWOUDunqkrACa86J4nrCSQZDZD\", \"id\": \"522751254580032\", \"expires\": null}"
+    "extra_data": "{\"id\": \"522751254580032\", \"expires\": null, \"access_token\": \"EAAInlZA1OMPEBADnVMwpOjGcPzvHrfp01dhIxsZAcnfEmYeavqXWUZBRlaFeWYCjmkXEJPigNgdcN38vrlBlonC8xawYW9zr72NnbBtPIRwKgjruQPahjLib7HS551cThBf2NN0R78b4bbUIaPlkWOUDunqkrACa86J4nrCSQZDZD\"}"
   }
 },
 {
@@ -841,15 +833,15 @@
     "user": 4,
     "provider": "vk-oauth2",
     "uid": "16011608",
-    "extra_data": "{\"access_token\": \"769a088950c0f2fbf7f63e95d5905b028afda59d85e3d60a74ce79fd70cabcb70ebbb9e952279628d6518\", \"id\": null, \"expires\": null}"
+    "extra_data": "{\"id\": null, \"expires\": null, \"access_token\": \"25948b8c46d22b522e6945108d5c7675687f7912f14ccc894179ef338d210564445e2cfcde3d8865a190e\"}"
   }
 },
 {
   "model": "app.guest",
-  "pk": 10,
+  "pk": 12,
   "fields": {
     "user": 4,
-    "phone": "45345345",
+    "phone": "079772731",
     "email": "me@ciubarov.ru",
     "company": 1
   }
@@ -1294,6 +1286,45 @@
     "object_repr": "Guest object",
     "action_flag": 2,
     "change_message": "Changed email."
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2016-08-06T21:07:15.642Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "10",
+    "object_repr": "Guest object",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2016-08-06T21:34:07.471Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "9",
+    "object_repr": "PromoCode object",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2016-08-06T21:34:14.370Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "11",
+    "object_repr": "Guest object",
+    "action_flag": 3,
+    "change_message": ""
   }
 }
 ]

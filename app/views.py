@@ -4,23 +4,27 @@ from api.vk import VKApi
 from api.ok import Odnoklassniki, OdnoklassnikiError
 from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth import logout
-from .forms import SaveUserData
+from .forms import UserDataForm
+from django.views.generic import View
 
-def home(request):
-    return render(request, 'app/home.html', {})
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'app/home.html', {})
 
-def get_promocode(request):
-    if request.method == "POST":
+class PromocodeView(View):
+    def get(self, request):
+        code = PromoCode.promo_gen()
+        return HttpResponse(code)
+
+    def post(self, request):
         guest = Guest.objects.filter(pk=request.POST['guest']).first()
         if guest:
             promo_code = PromoCode.create(guest,request.POST['promo_code'])
             promo_code.save()
-        return HttpResponse('ok')
-    else:
-        code = PromoCode.promo_gen()
-        return HttpResponse(code)
+            return HttpResponse('done');
 
-def show_promotion(request):
+class PromotionView(View):
+    form_class = UserDataForm
     company_info = {
         "company_id": 1,
         "name": 'Andys Pizza',
@@ -39,21 +43,23 @@ def show_promotion(request):
         'allowed_providers': ['vk','fb','ok','ig','tw']
     }
 
-    # нужно для создания гостя, без компании же нельзя
-    company = get_object_or_404(Company, id=1)
+    template_name = 'app/promotion.html'
 
-    # Нужно определять переменные или есть другой выход?
-    phone = None
-    email = None
-    guest = None
-    user_photo = None
-    form_error = 0
+    def get(self, request):
+        form = self.form_class()
+        if request.user and request.user.is_authenticated() and request.user.social_auth.filter(user_id=request.user.id):
+            guest = Guest.objects.filter(user=request.user).first()
+            if guest:
+                form = self.form_class(initial={'email':guest.email, 'phone':guest.phone})
+        else:
+            logout(request)
+        return render(request, self.template_name, {'promotion': self.promotion_info, 'company': self.company_info, 'form': form})
 
-    if request.user and request.user.is_authenticated():
+    def post(self, request):
         guest = Guest.objects.filter(user=request.user).first()
-
-    if request.method == "POST":
-        form = SaveUserData(request.POST)
+        company = get_object_or_404(Company, id=1)
+        form = self.form_class(request.POST)
+        form_error = 0
         if form.is_valid():
             phone = form.cleaned_data['phone']
             email = form.cleaned_data['email']
@@ -64,33 +70,10 @@ def show_promotion(request):
                     guest = Guest(id=guest.id, user=request.user, phone=phone, email=email, company=company)
                 else:
                     guest = Guest.create(request.user,phone,email,company)
-                guest.save()  
-    else:
-        if guest:
-            form = SaveUserData(initial={'email':guest.email, 'phone':guest.phone})
-        else:
-            form = SaveUserData()
-
-    user_friends = []
-    vk_token = 0
-    if request.user and request.user.is_authenticated():
-        vk_social = request.user.social_auth.filter(provider='vk-oauth2').first()
-        if vk_social:
-            vk_token = vk_social.extra_data['access_token']
-            vk_api = VKApi(vk_social.uid,vk_token)
-            user_friends = vk_api.get_friends_list()
-            user_photo = vk_api.get_profile_data()[0]['photo_200']
-        else:
-            logout(request)
-
-    args = {
-        'promotion': promotion_info, 
-        'company': company_info, 
-        'user_friends': user_friends, 
-        'token': vk_token,
-        'user_photo': user_photo,
-        'guest': guest,
-        'form': form,
-        'form_error': form_error
-    }
-    return render(request, 'app/promotion.html', args)
+                guest.save()
+                vk_social = request.user.social_auth.filter(provider='vk-oauth2').first()
+                if vk_social:
+                    vk_token = vk_social.extra_data['access_token']
+                    vk_api = VKApi(vk_social.uid,vk_token)
+                    user_friends = vk_api.get_friends_list()
+        return render(request, self.template_name, {'promotion': self.promotion_info, 'form': form, 'form_error': form_error, 'guest': guest, 'user_friends': user_friends, 'token': vk_token})
