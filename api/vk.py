@@ -10,10 +10,11 @@ class VKApi(object):
             'https://api.vk.com/method/users.get',
             params={
                 'access_token': self.token,
-                'fields': 'photo_100,sex,bdate,country,city, domain, can_post'
+                # 'fields': 'photo_100,sex,bdate,country,city, domain, can_post'
+                'fields': 'photo_200'
         }).json()
         
-        return response.get('profile')
+        return response.get('response')
     
     def get_friends_list(self):
         response = requests.get(

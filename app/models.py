@@ -3,6 +3,8 @@ from django.db import models
 from django.conf import settings
 # from tinymce.models import HTMLField
 import datetime
+import string
+import random
 
 SHORT_TEXT_LEN = 1000
 
@@ -41,7 +43,7 @@ class Promotion(models.Model):
     post_text = models.TextField()
     allowed_providers = models.CharField(max_length=200, default = 'vk,fb,ok,ig,tw', verbose_name = 'Allowed providers (Comma separate (vk,fb,ok,ig,tw))')
     company = models.ForeignKey(Company)
-    
+
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Promotion._meta.fields]
 
@@ -51,6 +53,28 @@ class Guest(models.Model):
     email = models.EmailField(max_length=50)
     company = models.ForeignKey(Company)
 
+    @classmethod
+    def create(cls, user, phone, email, Company):
+        guest = cls(user = user, phone = phone, email = email, company = Company)
+        return guest
+
 class Visit(models.Model):
     guest = models.ForeignKey(Guest)
+    company = models.ForeignKey(Company)
     datetime_of_visit = datetime
+    
+class PromoCode(models.Model):
+    promocode = models.CharField(max_length=10, unique = 1)
+    guest = models.ForeignKey(Guest)
+
+    @staticmethod
+    def promo_gen():
+        chars=string.ascii_uppercase + string.digits;
+        size = 6
+        code = ''.join(random.choice(chars) for _ in range(size))
+        return code
+
+    @classmethod
+    def create(cls, Guest, code):
+        promocode = cls(promocode = code, guest = Guest)
+        return promocode

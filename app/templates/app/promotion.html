@@ -7,10 +7,28 @@
 {% block content %}
 
 <div class="wrapper-promo">
-  
-      {% if user and not user.is_anonymous %}
+      {% if request.user and request.user.is_authenticated and not request.GET.step %}
+      <div class="user-data-form">
+            <span class="hello-user">
+                  Привет, {{request.user.first_name}}!<br>
+                  <!-- <img src="{{user_photo}}" alt=""> -->
+                  <span>Как мы можем с тобой связаться?</span>
+            </span>
+            <div class="inner">
+                  {% if form_error %}<span class="err">Напиши свой номер телефона или email</span>{% endif %}
+                  <form method="POST" action="{{request.path}}?step=2">
+                        {% csrf_token %}
+                        {{form.phone}}
+                        <span class="or">и / или</span>
+                        {{form.email}}
+                        <button>Сохранить</button>
+                  </form>
+            </div>
+      </div>
+      {% endif %}
+      {% if request.user and request.user.is_authenticated and request.GET.step %}
             <span class="hello-user">Поделиться скидкой с друзьями?</span>
-                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}')">
+                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}', {{guest.id}}, '{{csrf_token}}')">
                         <div class="friends-list">
                                     {% for usr in user_friends %}
                                           <label for="id{{usr.user_id}}">
@@ -29,7 +47,8 @@
                               <button class="btn nactive">Поделиться!</button>
                         </div>
                   </form>
-      {% else %}
+      {% endif %}
+      {% if request.user and not request.user.is_authenticated %}
             <div class="company-info">
                   <div class="logo">
                         <img src="/{{company.logo}}" alt="">
@@ -42,48 +61,25 @@
                               {% if company.website %}<span><a href="http://{{company.website}}" rel="nofollow" target="_blank">{{company.website}}</a></span>{% endif %}
                         </div>
                   </div>
-<!--                   <div style="position: absolute; left: 50px; top: 50px;">
-      <div class="parent">
-        <div class="dummy-child"></div>
-            <div class="valign" style="background-color: lightblue;">test</div>
-      </div>
-</div> -->
             </div>
-            <div class="inner">    
+            <div class="inner">
+                  {% if promotion.image %}<img src="/{{promotion.image}}" class="discount-image">{% endif %}
                   <h1>{{ promotion.title }}</h1>
                   <p>{{ promotion.description }}</p>
-                  <div class="promo_code">
-                        Ваш промо-код: <span>{{ promo_code }}</span>
-                  </div>
             </div>
             <div class="social-block">
                   <div class="title">
-                      {% if promotion.help_text %}
-                        {{ promotion.help_text }}
-                      {% else %}
-                        Войдите, используя аккаунт социальных сетей:
-                      {% endif %}
+                        {% if promotion.help_text %}
+                              {{ promotion.help_text }}
+                        {% else %}
+                              Войдите, используя аккаунт социальных сетей:
+                        {% endif %}
                   </div>
-                  <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" title="Facebook">
-                        <i class="icon-facebook"></i>
-                        Facebook
-                  </a>
-                  <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next={{request.path}}" title="ВКонтакте">
-                        <i class="icon-vkontakte"></i>
-                        ВКонтакте
-                  </a>
-                  <a class="btn-social btn-social-tw" href="#" title="Twitter">
-                        <i class="icon-twitter"></i>
-                        Twitter
-                  </a>
-                  <a class="btn-social btn-social-ig" href="#" title="Instagram">
-                        <i class="icon-instagram"></i>
-                        Instagram
-                  </a>
-                  <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}?next={{request.path}}" title="Odnoklassniki">
-                        <i class="icon-odnoklassniki"></i>
-                        Одноклассники
-                  </a>
+                  <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" title="Facebook"><i class="icon-facebook"></i>Facebook</a>
+                  <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next={{request.path}}" title="ВКонтакте"><i class="icon-vkontakte"></i>ВКонтакте</a>
+                  <a class="btn-social btn-social-tw" href="#" title="Twitter"><i class="icon-twitter"></i>Twitter</a>
+                  <a class="btn-social btn-social-ig" href="#" title="Instagram"><i class="icon-instagram"></i>Instagram</a>
+                  <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}?next={{request.path}}" title="Odnoklassniki"><i class="icon-odnoklassniki"></i>Одноклассники</a>
             </div>
       {% endif %}
 </div>

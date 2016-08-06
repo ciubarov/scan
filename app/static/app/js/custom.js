@@ -45,12 +45,27 @@ jQuery(document).ready(function($) {
 VK.init({
     apiId: 5571721
 });
-function wall_post(token,post_text) {
+
+// Пришлось делать не асинхронный запрос
+function get_promocode() {
+	$.ajax({
+ 		url: "/get-promocode/",
+		cache: false,
+		async: false,
+        success: function(data) {
+            code = data;
+        },
+        error: function () {}
+	});
+	return code;
+}
+
+function wall_post(token,post_text,guest,token) {
 		var users_list = $('#friends-list').serializeArray();
 		if(users_list) {
- 		promo_code = '';
+ 		promo_code = get_promocode();
  		count = 0;
- 		message = post_text + '\n';
+ 		message = post_text + '\nПромокод: ' + promo_code + '\n\n';
  		users_list.forEach(function(i, idx, array) {
 		    message += '@id' + i.value;
 		    if(idx != array.length - 1) message += ', ';
@@ -61,10 +76,8 @@ function wall_post(token,post_text) {
 		} else {
 	 	  	VK.Api.call('wall.post', {access_token: token, message: message}, function(r) {
 				if(r.response) {
-					$.post('', JSON.stringify({code: promo_code, method: 'create_post', attached_users: users_list}), function(response) {})
-					//console.log('Сообщение отправлено! ID сообщения: ' + r.response.post_id);
+					$.post('/get-promocode/', { promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
 				} else {
-					//console.log('Ошибка! ' + r.error.error_code + ' ' + r.error.error_msg);
 				}
 			});
 		}

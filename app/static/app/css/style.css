@@ -208,6 +208,47 @@ text-align: right;
     padding: 30px 0;
     background: rgba(227, 227, 227, 0.34);
 }
+.hello-user img {
+    display: block;
+    margin: 20px auto 0;
+    width: 100px;
+    border-radius: 100px;
+    border: 6px solid #fff;
+}
+
+.user-data-form input {
+    height: 50px;
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+    font-size: 22px;
+    border: 1px solid #d7d7d7;
+    text-align: center;
+    font-weight: 300;
+    font-family: "Roboto";
+}
+.user-data-form .or {
+    display: block;
+    font-size: 18px;
+    color: #a9a9a9;
+    font-weight: 300;
+    margin: 20px auto;
+}
+.user-data-form button {
+    margin: 20px 0 0;
+}
+.user-data-form .err {
+    background: rgba(255, 209, 209, 0.35);
+    padding: 10px 0 7px;
+    font-size: 14px;
+    margin: 0 0 10px;
+    color: #6b6b6b;
+    display: inline-block;
+    width: 502px;
+}
+.discount-image {
+    margin: 0 0 20px;
+}
 #friends-list .buttons {
     background: rgba(227, 227, 227, 0.34);
     padding: 30px;
@@ -216,7 +257,8 @@ text-align: right;
     box-sizing: border-box;
     overflow-y: hidden;
 }
-#friends-list .buttons .btn {
+#friends-list .buttons .btn,
+.user-data-form button {
     display: inline-block;
     font-weight: 300;
     height: 42px;
@@ -225,12 +267,12 @@ text-align: right;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    /* float: left; */
 }
 #friends-list .buttons .btn:hover {
     cursor: pointer;
 }
-#friends-list .buttons button {
+#friends-list .buttons button,
+.user-data-form button {
     background: #0d63b2;
     width: 24%;
     color: #fff;
@@ -241,7 +283,8 @@ text-align: right;
     font-family: "Roboto";
     transition: .2s;
 }
-#friends-list .buttons button:hover {
+#friends-list .buttons button:hover,
+.user-data-form button:hover {
     cursor: pointer;
     transition:.2s;
     background: #074e8f;
