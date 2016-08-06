@@ -73,7 +73,7 @@ def show_promotion(request):
 
     user_friends = []
     vk_token = 0
-    if request.user and request.user.is_authenticated() and request.user.social_auth:
+    if request.user and request.user.is_authenticated():
         vk_social = request.user.social_auth.filter(provider='vk-oauth2').first()
         if vk_social:
             vk_token = vk_social.extra_data['access_token']
