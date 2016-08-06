@@ -2,7 +2,9 @@
 *.log
 *.pot
 *.pyc
-__pycache__/
+app/__pycache__
+scanme/__pycache__
+api/__pycache__
 #uploads/
 local_settings.py
 db.sqlite3
