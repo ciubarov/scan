@@ -13,6 +13,8 @@ jQuery(document).ready(function($) {
 	    }
     });
 
+
+
     // Отмечаем всех друзей
     $('.check-all').on('click', function(){
     	console.log('1');
@@ -46,25 +48,33 @@ VK.init({
     apiId: 5571721
 });
 
-// Пришлось делать не асинхронный запрос
-function get_promocode() {
-	$.ajax({
- 		url: "/promocode/",
- 		type: 'GET',
-		cache: false,
-		async: false,
-        success: function(data) {
-            code = data;
-        },
-        error: function () {}
-	});
-	return code;
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+    	var randomPoz = Math.floor(Math.random() * charSet.length);
+    	randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
 }
 
-function wall_post(token,post_text,guest,token) {
+function user_data_form() {
+	var email = $('.step1 #id_email').val();
+	var phone = $('.step1 #id_phone').val();
+	if(email || phone) {
+		$('.step1').removeClass('act');
+    	$('.step2').addClass('act');
+	} else {
+		$('.step1 .err').show(200);
+	}
+}
+
+function wall_post(token,post_text,guest,token,post_url) {
+		var email = $('.step1 #id_email').val();
+		var phone = $('.step1 #id_phone').val();
 		var users_list = $('#friends-list').serializeArray();
 		if(users_list) {
- 		promo_code = get_promocode();
+ 		promo_code = randomString(6);
  		count = 0;
  		message = post_text + '\nПромокод: ' + promo_code + '\n\n';
  		users_list.forEach(function(i, idx, array) {
@@ -77,8 +87,9 @@ function wall_post(token,post_text,guest,token) {
 		} else {
 	 	  	VK.Api.call('wall.post', {access_token: token, message: message}, function(r) {
 				if(r.response) {
-					$.post('/promocode/', { promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
-				} else {
+					$.post(post_url, { email: email, phone: phone, promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
+					$('.step2').removeClass('act');
+					$('.step3').addClass('act');
 				}
 			});
 		}

@@ -360,6 +360,18 @@ text-align: right;
     font-weight: 500;
 }
 
+/* Animation */
+.step1,
+.step2,
+.step3 {
+    display: none;
+}
+.step1.act,
+.step2.act,
+.step3.act {
+    display: block;
+}
+
 /* Social auth */
 .social-block {
     margin: 10px 0 0;

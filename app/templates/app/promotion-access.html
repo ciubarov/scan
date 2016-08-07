@@ -1,0 +1,57 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+{{ promotion.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper-promo">
+      {% if request.user and request.user.is_authenticated %}
+      <div class="user-data-form step1 act">
+            <span class="hello-user">
+                  Привет, {{request.user.first_name}}!<br>
+                  <!-- <img src="{{user_photo}}" alt=""> -->
+                  <span>Как мы можем с тобой связаться?</span>
+            </span>
+            <div class="inner">
+                  <span class="err" style="display:none;">Напиши свой номер телефона или email</span>
+                  <form method="POST" action="javascript:void(null);" onsubmit="user_data_form()">
+                        {{form.phone}}
+                        <span class="or">и / или</span>
+                        {{form.email}}
+                        <button id="next-step">Сохранить</button>
+                  </form>
+            </div>
+      </div>
+      <div class="share-block step2">
+            <span class="hello-user">Поделиться скидкой с друзьями?</span>
+            <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}', '{{request.build_absolute_uri}}')">
+                  <div class="friends-list">
+                        {% for usr in user_friends %}
+                              <label for="id{{usr.user_id}}">
+                                    <div class="item">
+                                          <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
+                                          <img src="{{usr.photo_100}}" alt="">
+                                          <div class="name">
+                                                {{usr.first_name}} {{usr.last_name}}
+                                          </div>
+                                    </div>
+                              </label>
+                        {% endfor %}
+                  </div>
+                  <div class="buttons">
+                        <span class="check-all btn">Выбрать всех</span>
+                        <button class="btn nactive">Поделиться!</button>
+                  </div>
+            </form>
+      </div>
+      <div class="share-block step3">
+            <span class="hello-user">Скидка отправлена друзьям!</span>
+            <div class="inner">
+                  <p>Спасибо, что воспользовались бла-бла-бла</p>
+            </div>
+      </div>
+      {% endif %}
+</div>
+{% endblock %}

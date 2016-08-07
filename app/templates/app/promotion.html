@@ -7,48 +7,6 @@
 {% block content %}
 
 <div class="wrapper-promo">
-      {% if request.user and request.user.is_authenticated and not request.GET.step %}
-      <div class="user-data-form">
-            <span class="hello-user">
-                  Привет, {{request.user.first_name}}!<br>
-                  <!-- <img src="{{user_photo}}" alt=""> -->
-                  <span>Как мы можем с тобой связаться?</span>
-            </span>
-            <div class="inner">
-                  {% if form_error %}<span class="err">Напиши свой номер телефона или email</span>{% endif %}
-                  <form method="POST" action="{{request.path}}?step=2">
-                        {% csrf_token %}
-                        {{form.phone}}
-                        <span class="or">и / или</span>
-                        {{form.email}}
-                        <button>Сохранить</button>
-                  </form>
-            </div>
-      </div>
-      {% endif %}
-      {% if request.user and request.user.is_authenticated and request.GET.step %}
-            <span class="hello-user">Поделиться скидкой с друзьями?</span>
-                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}', {{guest.id}}, '{{csrf_token}}')">
-                        <div class="friends-list">
-                                    {% for usr in user_friends %}
-                                          <label for="id{{usr.user_id}}">
-                                                <div class="item">
-                                                      <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
-                                                      <img src="{{usr.photo_100}}" alt="">
-                                                      <div class="name">
-                                                            {{usr.first_name}} {{usr.last_name}}
-                                                      </div>
-                                                </div>
-                                          </label>
-                                    {% endfor %}
-                        </div>
-                        <div class="buttons">
-                              <span class="check-all btn">Выбрать всех</span>
-                              <button class="btn nactive">Поделиться!</button>
-                        </div>
-                  </form>
-      {% endif %}
-      {% if request.user and not request.user.is_authenticated %}
             <div class="company-info">
                   <div class="logo">
                         <img src="/{{company.logo}}" alt="">
@@ -75,12 +33,11 @@
                               Войдите, используя аккаунт социальных сетей:
                         {% endif %}
                   </div>
-                  <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" title="Facebook"><i class="icon-facebook"></i>Facebook</a>
-                  <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next={{request.path}}" title="ВКонтакте"><i class="icon-vkontakte"></i>ВКонтакте</a>
+                  <a class="btn-social btn-social-fb" href="{% url 'social:begin' 'facebook' %}?next={{request.path}}access?company_id={{company.company_id}}?provider=facebook" title="Facebook"><i class="icon-facebook"></i>Facebook</a>
+                  <a class="btn-social btn-social-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next={{request.path}}access?company_id={{company.company_id}}?provider=vk-oauth2" title="ВКонтакте"><i class="icon-vkontakte"></i>ВКонтакте</a>
                   <a class="btn-social btn-social-tw" href="#" title="Twitter"><i class="icon-twitter"></i>Twitter</a>
                   <a class="btn-social btn-social-ig" href="#" title="Instagram"><i class="icon-instagram"></i>Instagram</a>
-                  <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}?next={{request.path}}" title="Odnoklassniki"><i class="icon-odnoklassniki"></i>Одноклассники</a>
+                  <a class="btn-social btn-social-ok" href="{% url 'social:begin' 'odnoklassniki-oauth2' %}?next={{request.path}}access?company_id={{company.company_id}}?provider=odnoklassniki-oauth2" title="Odnoklassniki"><i class="icon-odnoklassniki"></i>Одноклассники</a>
             </div>
-      {% endif %}
 </div>
 {% endblock %}
