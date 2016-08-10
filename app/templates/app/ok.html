@@ -1,118 +1,40 @@
-jQuery(document).ready(function($) {
-    // По клику на лейбл отмечаем чекбокс и добавляем класс, для стилизации отмеченной фотографии
-    $('#friends-list label').on('click', function (event) {
-        event.preventDefault();
-        var $check = $(':checkbox', this);
-        $check.prop('checked', !$check.prop('checked'));
-        $(this).toggleClass('active');
-        var checked = $("#friends-list input:checked").length > 0;
-	    if (!checked){
-	        $('#friends-list button').addClass('nactive');
-	    } else {
-	    	$('#friends-list button').removeClass('nactive');
-	    }
-    });
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Viral OK widgets</title>
+    <style>
+        #WidgetOKHolder {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.25);
+        }
 
+        #WidgetOKHolder iframe {
+            display: block;
+            width: 90%;
+            height: 90%;
+            padding: 0;
+            margin: 0 auto;
+            margin-top: 5%;
+            border: 2px solid #a0a0a0;
+        }
+    </style>
 
+</head>
+<body>
 
-    // Отмечаем всех друзей
-    $('.check-all').on('click', function(){
-    	console.log('1');
-    	$('#friends-list label').each(function(){
-    		$(this).addClass('active');
-    	});
-    	$('#friends-list input:checkbox').each(function(){
-    		$(this).prop('checked', true);
-    	});
-    	$('#friends-list button').removeClass('nactive');
-    	$(this).html('Снять выбор');
-    	// Если все друзья отмечены, и клик призошёл по кнопку "Снять выбор", снимаем выбор со всех и меняем надпись
-    	if($(this).hasClass('active')) {
-	    	if(confirm("Вы уверены, что хотите отменить выбор?")) {
-		    	$('#friends-list label').each(function(){
-		    		$(this).removeClass('active');
-		    	});
-		    	$('#friends-list input:checkbox').each(function(){
-		    		$(this).prop('checked', false);
-		    	});
-		    	$(this).html('Выбрать всех');
-		    	$(this).removeClass('active');
-		    	$('#friends-list button').addClass('nactive');
-	    	}
-	    } else {
-	    	$(this).addClass('active');
-	    }
-    });
-});
-VK.init({
-    apiId: 5571721
-});
-
-function randomString(len, charSet) {
-    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var randomString = '';
-    for (var i = 0; i < len; i++) {
-    	var randomPoz = Math.floor(Math.random() * charSet.length);
-    	randomString += charSet.substring(randomPoz,randomPoz+1);
-    }
-    return randomString;
-}
-
-function user_data_form() {
-	var email = $('.step1 #id_email').val();
-	var phone = $('.step1 #id_phone').val();
-	if(email || phone) {
-		$('.step1').removeClass('act');
-    	$('.step2').addClass('act');
-	} else {
-		$('.step1 .err').show(200);
-	}
-}
-
-function publish_vk(token,post_text,guest,token,post_url) {
-		var email = $('.step1 #id_email').val();
-		var phone = $('.step1 #id_phone').val();
-		var users_list = $('#friends-list').serializeArray();
-		if(users_list) {
- 		promo_code = randomString(6);
- 		count = 0;
- 		message = post_text + '\nПромокод: ' + promo_code + '\n\n';
- 		users_list.forEach(function(i, idx, array) {
-		    message += '@id' + i.value;
-		    if(idx != array.length - 1) message += ', ';
-		    count += 1;
-		});
-		if(count === 0) {
-			alert('Вы должны выбрать хотя бы одного друга!');
-		} else {
-	 	  	VK.Api.call('wall.post', {access_token: token, message: message}, function(r) {
-				if(r.response) {
-					$.post(post_url, { email: email, phone: phone, promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
-					$('.step2').removeClass('act');
-					$('.step3').addClass('act');
-				}
-			});
-		}
-	}
-}
-
-function publish_odnoklassniki(token, text) {
-    var appId = '1247766528';
-    var attachment = '{"media": [{"type": "text", "text": "' + text + '"}]}';
-    var secretKey = '6DCFAC9A5B92B2A71717BCCA';
-    var signature = md5("st.attachment=" + attachment + secretKey);
-    var q = 'http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=' + appId;
-    q += '&st.attachment=' + encodeURIComponent(attachment);
-    q += '&st.signature=' + signature;
-    q += '&st.access_token=' + token;
-    q += '&st.popup=on&st.silent=off';
-    var params = "width=640,height=360,menubar=no,toolbar=no,resizable=no,scrollbars=no,status=no,location=no";
-    window.open(q, 'ok_post', params);
-	// нужно подтверждение от одноклассников !!!
-	$('.step2').removeClass('act');
-	$('.step3').addClass('act');
-}
-
+<script type="text/javascript" src="https://api.odnoklassniki.ru/js/fapi5.js" defer="defer"></script>
+<script src="https://odnoklassniki.github.io/ok-js-sdk/oksdk.js"></script>
+<script type="text/javascript">
 function md5 ( str ) {  // Calculate the md5 hash of a string
     // 
     // +   original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -288,3 +210,128 @@ function md5 ( str ) {  // Calculate the md5 hash of a string
 
     return temp.toLowerCase();
 }
+
+function publish() {
+    var appId = '1247766528';
+    var attachment = '{"media": [{"type": "text", "text": "{{promotion.post_text}}"}]}';
+    var secretKey = '6DCFAC9A5B92B2A71717BCCA';
+    var signature = md5("st.attachment=" + attachment + secretKey);
+    var q = 'http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=' + appId;
+    q += '&st.attachment=' + encodeURIComponent(attachment);
+    q += '&st.signature=' + signature;
+    q += '&st.access_token={{token}}';
+    q += '&st.popup=on&st.silent=off';
+    var params = "width=640,height=360,menubar=no,toolbar=no,resizable=no,scrollbars=no,status=no,location=no";
+    window.open(q, 'ok_post', params);
+    // console.log('{{token}}');
+    // console.log(attachment);
+    // console.log(secretKey);
+}
+
+    // WidgetOK = {
+    //     rParams: {},
+    //     hParams: {},
+    //     /* --- BEGIN your config --- */
+    //     appId: '1247766528',
+    //     returnUrl: '//apiok.github.io/js_sample_widgets/viral-cb.html',
+    //     /* --- END your config --- */
+
+    //     /** @public */
+    //     openInvite: function () {
+    //         WidgetOK.open('WidgetInvite');
+    //     },
+    //     /** @public */
+    //     openSuggest: function () {
+    //         WidgetOK.open('WidgetSuggest');
+    //     },
+    //     /** @public */
+    //     openMediatopicPost: function () {
+    //         WidgetOK.open('WidgetMediatopicPost', {
+    //             feed: '{"media": [{"type": "text", "text": "{{promotion.post_text}}"}]}'
+    //         });
+    //     },
+    //     /** @private */
+    //     open: function (widget, args) {
+    //         var p = WidgetOK.rParams;
+    //         var p1 = WidgetOK.hParams;
+    //         var sessSecKey = p['session_secret_key'] || p1['session_secret_key'];
+    //         args = args || {};
+    //         var proto = window.location.protocol == 'file:' ? 'http:' : window.location.protocol;
+
+    //         var sigSource = '';
+    //         if (args.feed != null) {
+    //             sigSource += 'st.attachment=' + args.feed;
+    //         }
+    //         //sigSource += 'st.return=' + proto + WidgetOK.returnUrl + sessSecKey;
+    //         sigSource += 'st.return=' + proto + WidgetOK.returnUrl + sessSecKey;
+
+    //         var query = proto + '//connect.ok.ru/dk?st.cmd=' + widget + '&st.app=' + WidgetOK.appId;
+    //         if (args.feed != null) {
+    //             query += '&st.attachment=' + encodeURIComponent(args.feed);
+    //         }
+    //         query += '&st.signature=' + OKSDK.Util.md5(sigSource);
+    //         query += '&st.return=' + encodeURIComponent(proto + WidgetOK.returnUrl);
+    //         query += '&st.popup=yes';
+    //         if (p1['access_token']) {
+    //             query += '&st.access_token=' + p1['access_token'];
+    //         }
+    //         if (p['session_key']) {
+    //             query += '&st.session_key=' + p['session_key'];
+    //         }
+    //         var holder = document.getElementById('WidgetOKHolder');
+    //         var params = "width=640,height=360,menubar=no,toolbar=no,resizable=no,scrollbars=no,status=no,location=no"
+    //         window.open(query, 'ok_post', params);
+    //         //var html = [];
+    //         //html.push('<a style="float:right;display:block;" onclick="document.getElementById(',
+    //                // "'WidgetOKHolder').style.display = 'none';", '">[close]</a>');
+    //         //html.push('<iframe src="', query, '"></iframe>');
+    //        // holder.innerHTML = html.join('');
+    //        // holder.style.display = 'block';
+    //     }
+    // };
+</script>
+
+<div id="WidgetOKHolder"></div>
+
+<p>
+<input type="button" onclick="publish();" value="Post a new feed22222222"/><br/>
+<input type="button" onclick="WidgetOK.openMediatopicPost();" value="Post a new feed"/><br/>
+    Posts a simple "hello world!" mediatopic
+</p>
+
+<p>
+<input type="button" onclick="WidgetOK.openInvite();" value="Invite (not-playing) friends to app"/><br/>
+    Selects friends for invitation
+</p>
+
+<p>
+<input type="button" onclick="WidgetOK.openSuggest();" value="Suggest app to friends (both playing and not)"/><br/>
+    Selects friends for suggestion
+</p>
+
+<script type="text/javascript">
+//     document.addEventListener('DOMContentLoaded', function () {
+//         WidgetOK.rParams = FAPI.Util.getRequestParameters();
+//         WidgetOK.hParams = FAPI.Util.getRequestParameters(window.location.hash);
+
+//         FAPI.init({'app_id': 1247766528, 'app_key': 'CBAJGQFLEBABABABA'},
+//                 function () {
+// //                    alert('SUCCESS');
+//                 },
+//                 function (err) {
+//                     alert('ERROR:' + err);
+//                 }
+//         );
+
+//         window.addEventListener('message', function (event) {
+//             if (event.data == 'hideWidgetIframe') {
+//                 var holder = document.getElementById('WidgetOKHolder');
+//                 holder.innerHTML = '';
+//                 holder.style.display = 'none';
+//             }
+//         }, false);
+//     }, false);
+</script>
+
+</body>
+</html>

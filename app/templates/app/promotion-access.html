@@ -24,28 +24,42 @@
                   </form>
             </div>
       </div>
-      <div class="share-block step2">
-            <span class="hello-user">Поделиться скидкой с друзьями?</span>
-            <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="wall_post('{{token}}', '{{promotion.post_text}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}', '{{request.build_absolute_uri}}')">
-                  <div class="friends-list">
-                        {% for usr in user_friends %}
-                              <label for="id{{usr.user_id}}">
-                                    <div class="item">
-                                          <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
-                                          <img src="{{usr.photo_100}}" alt="">
-                                          <div class="name">
-                                                {{usr.first_name}} {{usr.last_name}}
+      {% if provider == 'vk-oauth2' %}
+            <div class="share-block step2">
+                  <span class="hello-user">Поделиться скидкой с друзьями?</span>
+                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="publish_vk('{{token}}', '{{promotion.post_text}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}', '{{request.build_absolute_uri}}')">
+                        <div class="friends-list">
+                              {% for usr in user_friends %}
+                                    <label for="id{{usr.user_id}}">
+                                          <div class="item">
+                                                <input type="checkbox" class="checkbox" value="{{usr.user_id}}" id="id{{usr.user_id}}" name="post_for[]">
+                                                <img src="{{usr.photo_100}}" alt="">
+                                                <div class="name">
+                                                      {{usr.first_name}} {{usr.last_name}}
+                                                </div>
                                           </div>
-                                    </div>
-                              </label>
-                        {% endfor %}
-                  </div>
-                  <div class="buttons">
-                        <span class="check-all btn">Выбрать всех</span>
-                        <button class="btn nactive">Поделиться!</button>
-                  </div>
-            </form>
-      </div>
+                                    </label>
+                              {% endfor %}
+                        </div>
+                        <div class="buttons">
+                              <span class="check-all btn">Выбрать всех</span>
+                              <button class="btn nactive">Поделиться!</button>
+                        </div>
+                  </form>
+            </div>
+      {% endif %}
+
+      {% if provider == 'odnoklassniki-oauth2' %}
+            <div class="share-block step2">
+                  <span class="hello-user">Поделиться скидкой с друзьями?</span>
+                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="publish_odnoklassniki('{{token}}', '{{promotion.post_text}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}', '{{request.build_absolute_uri}}')">
+                        <div class="buttons bg-white">
+                              <button class="btn">Поделиться!</button>
+                        </div>
+                  </form>
+            </div>
+      {% endif %}
+
       <div class="share-block step3">
             <span class="hello-user">Скидка отправлена друзьям!</span>
             <div class="inner">

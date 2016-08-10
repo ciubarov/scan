@@ -433,6 +433,9 @@ footer {
     padding: 20px 0 0;
     text-align: center;
 }
+.bg-white {
+    background: #fff !important;
+}
 @media only screen and (min-width:0px) and (max-width:700px), only screen and (min-device-width:0px) and (max-device-width:700px) {
     .wrapper {
         margin: 0 0 20px;

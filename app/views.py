@@ -6,6 +6,7 @@ from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth import logout
 from .forms import UserDataForm
 from django.views.generic import View
+import base64
 
 class HomeView(View):
     def get(self, request):
@@ -49,19 +50,26 @@ class PromotionAccessView(View):
     }
     form_class = UserDataForm
     template_name = 'app/promotion-access.html'
-
     def get(self, request):
+        user_friends = {}
+        token = None
+        social = None
         form = self.form_class
         if request.user and request.user.is_authenticated() and request.user.social_auth.filter(user_id=request.user.id):
             guest = Guest.objects.filter(user=request.user).first()
             if guest:
                 form = self.form_class(initial={'email':guest.email, 'phone':guest.phone})
-            vk_social = request.user.social_auth.filter(provider='vk-oauth2').first()
-            if vk_social:
-                vk_token = vk_social.extra_data['access_token']
-                vk_api = VKApi(vk_social.uid,vk_token)
-                user_friends = vk_api.get_friends_list()
-            return render(request, self.template_name, {'promotion': self.promotion_info, 'form': form, 'guest': guest, 'user_friends': user_friends, 'token': vk_token})
+
+            social = request.user.social_auth.filter(user_id=request.user.id).first()
+
+            if social:
+                token = social.extra_data['access_token']
+
+                if social.provider == 'vk-oauth2':
+                    vk_api = VKApi(social.uid,token)
+                    user_friends = vk_api.get_friends_list()
+
+            return render(request, self.template_name, {'promotion': self.promotion_info, 'form': form, 'guest': guest, 'user_friends': user_friends, 'token': token, 'provider': social.provider})
         else:
             return redirect('/')
 
