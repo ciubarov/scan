@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from app.models import Company, Promotion, Visit, Guest, PromoCode
 from api.vk import VKApi
+from django.conf import settings
 from api.ok import Odnoklassniki, OdnoklassnikiError
 from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth import logout
 from .forms import UserDataForm
 from django.views.generic import View
-import base64
+import hashlib
+import urllib.parse
 
 class HomeView(View):
     def get(self, request):
@@ -54,6 +56,7 @@ class PromotionAccessView(View):
         user_friends = {}
         token = None
         social = None
+        pub_query = None
         form = self.form_class
         if request.user and request.user.is_authenticated() and request.user.social_auth.filter(user_id=request.user.id):
             guest = Guest.objects.filter(user=request.user).first()
@@ -68,8 +71,25 @@ class PromotionAccessView(View):
                 if social.provider == 'vk-oauth2':
                     vk_api = VKApi(social.uid,token)
                     user_friends = vk_api.get_friends_list()
+                
+                if social.provider == 'odnoklassniki-oauth2':
+                    app_id = settings.SOCIAL_AUTH_ODNOKLASSNIKI_OAUTH2_KEY
+                    s_key = settings.SOCIAL_AUTH_ODNOKLASSNIKI_OAUTH2_SECRET
+                    
+                    attachment_raw = '{"media": [{"type": "text", "text": "' + self.promotion_info['post_text'] + '"}]}'
+                    attachment = urllib.parse.quote(attachment_raw.encode("utf-8"))
 
-            return render(request, self.template_name, {'promotion': self.promotion_info, 'form': form, 'guest': guest, 'user_friends': user_friends, 'token': token, 'provider': social.provider})
+                    signature_raw = 'st.attachment=' + attachment_raw + s_key
+                    signature = hashlib.md5(signature_raw.encode('utf-8')).hexdigest()
+                    
+                    pub_query = 'https://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=' + app_id
+                    pub_query += '&st.attachment=' + attachment
+                    pub_query += '&st.signature=' + signature
+                    pub_query += '&st.popup=on&st.silent=off';
+                    pub_query += '&st.access_token=' + token;
+                    pub_query += '-----' + signature_raw
+
+            return render(request, self.template_name, {'promotion': self.promotion_info, 'form': form, 'guest': guest, 'user_friends': user_friends, 'token': token, 'provider': social.provider, 'pub_query': pub_query})
         else:
             return redirect('/')
 

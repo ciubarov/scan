@@ -52,7 +52,7 @@
       {% if provider == 'odnoklassniki-oauth2' %}
             <div class="share-block step2">
                   <span class="hello-user">Поделиться скидкой с друзьями?</span>
-                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="publish_odnoklassniki('{{token}}', '{{promotion.post_text}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}', '{{request.build_absolute_uri}}')">
+                  <form method="POST" id="friends-list" action="javascript:void(null);" onsubmit="publish_odnoklassniki('{{token}}', '{{pub_query}}', {% if guest.id %}{{guest.id}}{% else %}0{% endif %}, '{{csrf_token}}')">
                         <div class="buttons bg-white">
                               <button class="btn">Поделиться!</button>
                         </div>

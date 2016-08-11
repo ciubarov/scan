@@ -69,7 +69,7 @@ function user_data_form() {
 	}
 }
 
-function publish_vk(token,post_text,guest,token,post_url) {
+function publish_vk(token,post_text,guest,csrf_token,post_url) {
 		var email = $('.step1 #id_email').val();
 		var phone = $('.step1 #id_phone').val();
 		var users_list = $('#friends-list').serializeArray();
@@ -87,7 +87,7 @@ function publish_vk(token,post_text,guest,token,post_url) {
 		} else {
 	 	  	VK.Api.call('wall.post', {access_token: token, message: message}, function(r) {
 				if(r.response) {
-					$.post(post_url, { email: email, phone: phone, promo_code: promo_code, guest: guest, csrfmiddlewaretoken: token });
+					$.post(post_url, { email: email, phone: phone, promo_code: promo_code, guest: guest, csrfmiddlewaretoken: csrf_token });
 					$('.step2').removeClass('act');
 					$('.step3').addClass('act');
 				}
@@ -96,18 +96,18 @@ function publish_vk(token,post_text,guest,token,post_url) {
 	}
 }
 
-function publish_odnoklassniki(token, text) {
-    var appId = '1247766528';
-    var attachment = '{"media": [{"type": "text", "text": "' + text + '"}]}';
-    var secretKey = '6DCFAC9A5B92B2A71717BCCA';
-    var signature = md5("st.attachment=" + attachment + secretKey);
-    var q = 'http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=' + appId;
-    q += '&st.attachment=' + encodeURIComponent(attachment);
-    q += '&st.signature=' + signature;
-    q += '&st.access_token=' + token;
-    q += '&st.popup=on&st.silent=off';
+function publish_odnoklassniki(token, query, guest, csrf_token) {
+    // var appId = '1247766528';
+    // var attachment = '{"media": [{"type": "text", "text": "' + text + '"}]}';
+    // var secretKey = '6DCFAC9A5B92B2A71717BCCA';
+    // var signature = md5("st.attachment=" + encodeURIComponent(attachment) + secretKey);
+    // var q = 'http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=' + appId;
+    // q += '&st.attachment=' + encodeURIComponent(attachment);
+    // q += '&st.signature=' + signature;
+    // q += '&st.access_token=' + token;
+    // q += '&st.popup=on&st.silent=off';
     var params = "width=640,height=360,menubar=no,toolbar=no,resizable=no,scrollbars=no,status=no,location=no";
-    window.open(q, 'ok_post', params);
+    window.open(query, 'ok_post', params);
 	// нужно подтверждение от одноклассников !!!
 	$('.step2').removeClass('act');
 	$('.step3').addClass('act');
